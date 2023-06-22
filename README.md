@@ -1,15 +1,15 @@
 # Metrorec
 
-O código fornecido é uma simulação de uma estação de metrô chamada "METROREC". O programa simula a interação entre passageiros e vagões em uma estação, onde os passageiros esperam pelo vagão e embarcam quando ele chega.
+The code provided is a simulation of a subway station called "METROREC". The program simulates the interaction between passengers and wagons at a station, where passengers wait for the wagon and board when it arrives.
 
-O código principal está contido na função main(). Ele inicia uma estação de metrô usando a função estacao_init() e gera um número aleatório de passageiros. Em seguida, cria uma thread para cada passageiro usando a função pthread_create(). Cada thread de passageiro chama a função passageiros_thread(), onde o passageiro espera pelo vagão usando a função estacao_espera_pelo_vagao() e incrementa um contador atômico chamado counter para rastrear o número de passageiros que estão prontos para embarcar.
+The main code is contained in the main() function. It starts a subway station using the estacao_init() function and generates a random number of passengers. It then creates a thread for each passenger using the pthread_create() function. Each passenger thread calls the passenger_thread() function, where the passenger waits for the car using the estacao_espera_pelo_vagao() function and increments an atomic counter called counter to track the number of passengers who are ready to board.
 
-Em paralelo, há outra thread chamada vagao_thread() que representa um vagão de metrô. Esta thread é criada em um loop enquanto houver passageiros esperando na estação. A função vagao_thread() preenche o vagão chamando estacao_preencher_vagao(), passando o número de assentos livres no vagão. Dentro de estacao_preencher_vagao(), a função aguarda até que o número de assentos livres seja igual a zero usando pthread_cond_wait().
+In parallel, there is another thread called vagao_thread() that represents a subway car. This thread is created in a loop while there are passengers waiting at the station. The vagao_thread() function fills the wagon by calling estacao_preencher_vagao(), passing the number of free seats in the wagon. Inside estacao_preencher_vagao(), the function waits until the number of free seats equals zero using pthread_cond_wait().
 
-Uma vez que o vagão está cheio ou não há mais passageiros esperando na estação, a thread do vagão sai do loop e executa o restante do código. Os passageiros são então embarcados um por vez usando a função estacao_embarque() dentro de um loop. Cada vez que um passageiro embarca, o contador atômico counter é decrementado. Se em algum momento o valor do contador atômico counter for maior que o número de passageiros restantes na estação, isso indica um erro.
+Once the car is full or there are no more passengers waiting at the station, the car thread exits the loop and executes the rest of the code. Passengers are then boarded one at a time using the estacao_embarque() function inside a loop. Each time a passenger boards, the atomic counter is decremented. If at any time the value of the atomic counter counter is greater than the number of passengers remaining in the station, this indicates an error.
 
-Após todos os passageiros terem embarcado, o programa imprime uma mensagem indicando que a estação foi finalizada com sucesso.
+After all passengers have boarded, the program prints a message indicating that the station was successfully completed.
 
-Além do código principal, há também a definição da estrutura estacao e várias funções auxiliares relacionadas à estação de metrô. Essas funções são responsáveis por inicializar a estação, preencher o vagão, fazer os passageiros esperarem pelo vagão e embarcar nos assentos disponíveis.
+In addition to the main code, there is also the definition of the station structure and various auxiliary functions related to the metro station. These roles are responsible for starting the station, filling the car, making passengers wait for the car, and boarding available seats.
 
-Em resumo, o código simula a interação entre passageiros e vagões em uma estação de metrô, garantindo que os passageiros esperem pelo vagão e embarquem corretamente nos assentos disponíveis.
+In summary, the code simulates the interaction between passengers and cars at a subway station, ensuring that passengers wait for the car and correctly board the available seats.
